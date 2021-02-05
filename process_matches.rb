@@ -33,7 +33,7 @@ stream.each do |line|
   (team1,score1), (team2,score2) = line.scan(@pattern)
 
   # Exit if there is a formatting issue (e.g. the regex failed)
-  if [team1,score1,team2,score2].reject(&:nil?).empty?
+  if [team1,score1,team2,score2].any?(&:nil?)
     fail("Input match file improperly formatted")
   end
 
@@ -41,8 +41,8 @@ stream.each do |line|
   # currently matched teams
   if @teams.include?(team1) || @teams.include?(team2)
     @teams = []
-    @day += 1
     print_matchday
+    @day += 1
   end
 
   # Store match and day's contestants
